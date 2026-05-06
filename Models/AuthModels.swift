@@ -5,7 +5,6 @@
 
 import Foundation
 
-/// Auth errors with specific messages for each failure type
 enum AuthError: LocalizedError, Equatable {
     case invalidEmail
     case weakPassword(reason: String)
