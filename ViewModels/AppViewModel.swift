@@ -35,6 +35,7 @@ final class AppViewModel: ObservableObject {
 		currentScreen = .home
 
 		Task { [identifier = response.user.id, container = serviceContainer] in
+			await container.bootstrapDatabase()
 			await container.seedSampleData(for: identifier)
 		}
 	}
