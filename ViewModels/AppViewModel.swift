@@ -3,6 +3,7 @@
 //
 
 import SwiftUI
+import Combine
 
 // Represents the current screen
 enum AppScreen {

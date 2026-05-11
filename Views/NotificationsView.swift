@@ -108,12 +108,21 @@ struct NotificationsView: View {
                 placeholder: "Bill name (e.g. Electricity)",
                 text: $viewModel.billTitle
             )
+            
+            #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
             InputField(
                 icon: "dollarsign",
                 placeholder: "Amount (optional)",
                 text: $viewModel.billAmount,
                 keyboardType: .decimalPad
             )
+            #else
+            InputField(
+                icon: "dollarsign",
+                placeholder: "Amount (optional)",
+                text: $viewModel.billAmount
+            )
+            #endif
 
             DatePicker(
                 "Due",
@@ -159,12 +168,20 @@ struct NotificationsView: View {
                 .tint(AppConstants.Colors.primary)
             }
 
+            #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
             InputField(
                 icon: "percent",
                 placeholder: "Threshold % (e.g. 80)",
                 text: $viewModel.budgetThreshold,
                 keyboardType: .numberPad
             )
+            #else
+            InputField(
+                icon: "percent",
+                placeholder: "Threshold % (e.g. 80)",
+                text: $viewModel.budgetThreshold
+            )
+            #endif
 
             Text("You'll be alerted when spending in this category passes the threshold.")
                 .font(.caption)

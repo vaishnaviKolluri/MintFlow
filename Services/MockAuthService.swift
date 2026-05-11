@@ -13,7 +13,7 @@ private struct StoredCredential: Sendable {
 
 actor MockAuthService: AuthServiceProtocol {
 
-    private var userStore: [String: StoredCredential] = []
+    private var userStore: [String: StoredCredential] = [:]
 
     func register(request: RegisterRequest) async throws -> AuthResponse {
         try await simulateNetworkDelay()

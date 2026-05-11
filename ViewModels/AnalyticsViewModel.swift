@@ -5,6 +5,7 @@
 // Swift Charts in AnalyticsView consumes these computed values directly.
 
 import Foundation
+import Combine
 
 /// Time window the user can switch between on the analytics screen.
 enum AnalyticsRange: String, CaseIterable, Identifiable {
