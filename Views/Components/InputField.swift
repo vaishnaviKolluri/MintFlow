@@ -12,6 +12,7 @@ struct InputField: View {
     @Binding var text: String
     var isSecure: Bool = false
     var isEmail: Bool = false
+    var keyboardType: UIKeyboardType? = nil
 
     var body: some View {
         HStack(spacing: 14) {
@@ -24,9 +25,13 @@ struct InputField: View {
                     SecureField(placeholder, text: $text)
                 } else {
                     TextField(placeholder, text: $text)
-                        .textInputAutocapitalization(isEmail ? .never : .words)
-                        .keyboardType(isEmail ? .emailAddress : .default)
-                        .autocorrectionDisabled(isEmail)
+                        .textInputAutocapitalization(
+                            isEmail || keyboardType != nil ? .never : .words
+                        )
+                        .keyboardType(
+                            keyboardType ?? (isEmail ? .emailAddress : .default)
+                        )
+                        .autocorrectionDisabled(isEmail || keyboardType != nil)
                 }
             }
             .font(.body)

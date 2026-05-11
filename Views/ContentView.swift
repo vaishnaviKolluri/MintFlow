@@ -19,6 +19,12 @@ struct ContentView: View {
                 SignupView()
             case .home:
                 HomeView()
+            case .analytics:
+                let user = appViewModel.currentUser
+                    ?? User(email: "demo@mintflow.app", fullName: "Demo User")
+                AnalyticsView(user: user)
+            case .notifications:
+                NotificationsView()
             }
         }
         .animation(.easeInOut(duration: 0.35), value: appViewModel.currentScreen)

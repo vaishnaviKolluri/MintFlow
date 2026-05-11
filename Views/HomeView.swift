@@ -38,7 +38,7 @@ struct HomeView: View {
     }
 
     private func topBar(viewModel: HomeViewModel) -> some View {
-        HStack {
+        HStack(spacing: 12) {
             VStack(alignment: .leading, spacing: 4) {
                 Text("Hello, \(viewModel.firstName)!")
                     .font(.title2.weight(.bold))
@@ -50,6 +50,19 @@ struct HomeView: View {
             }
 
             Spacer()
+
+            // Notifications
+            Button {
+                appViewModel.navigate(to: .notifications)
+            } label: {
+                Image(systemName: "bell.fill")
+                    .font(.title3)
+                    .foregroundColor(AppConstants.Colors.textSecondary)
+                    .padding(10)
+                    .background(AppConstants.Colors.cardBackground)
+                    .clipShape(Circle())
+                    .shadow(color: .black.opacity(0.08), radius: 4, y: 2)
+            }
 
             // Logout
             Button {
@@ -150,31 +163,46 @@ struct HomeView: View {
 
     private var quickActions: some View {
         HStack(spacing: 16) {
-            quickActionTile(icon: "plus.circle.fill",    label: "Add\nExpense")
-            quickActionTile(icon: "list.bullet.clipboard", label: "View\nBudgets")
-            quickActionTile(icon: "chart.bar.fill",       label: "Analytics")
-            quickActionTile(icon: "gearshape.fill",        label: "Settings")
+            quickActionTile(icon: "plus.circle.fill", label: "Add\nExpense") {
+                // TODO: navigate to Add Transaction
+            }
+            quickActionTile(icon: "list.bullet.clipboard", label: "View\nBudgets") {
+                // TODO: navigate to Budgets
+            }
+            quickActionTile(icon: "chart.bar.fill", label: "Analytics") {
+                appViewModel.navigate(to: .analytics)
+            }
+            quickActionTile(icon: "bell.fill", label: "Alerts") {
+                appViewModel.navigate(to: .notifications)
+            }
         }
     }
 
-    private func quickActionTile(icon: String, label: String) -> some View {
-        VStack(spacing: 8) {
-            Image(systemName: icon)
-                .font(.title2)
-                .foregroundColor(AppConstants.Colors.primary)
+    private func quickActionTile(
+        icon: String,
+        label: String,
+        action: @escaping () -> Void = {}
+    ) -> some View {
+        Button(action: action) {
+            VStack(spacing: 8) {
+                Image(systemName: icon)
+                    .font(.title2)
+                    .foregroundColor(AppConstants.Colors.primary)
 
-            Text(label)
-                .font(.caption2.weight(.medium))
-                .foregroundColor(AppConstants.Colors.textSecondary)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .fixedSize(horizontal: false, vertical: true)
+                Text(label)
+                    .font(.caption2.weight(.medium))
+                    .foregroundColor(AppConstants.Colors.textSecondary)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .background(AppConstants.Colors.cardBackground)
+            .cornerRadius(AppConstants.Layout.cornerRadius)
+            .shadow(color: .black.opacity(0.06), radius: 6, y: 2)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 16)
-        .background(AppConstants.Colors.cardBackground)
-        .cornerRadius(AppConstants.Layout.cornerRadius)
-        .shadow(color: .black.opacity(0.06), radius: 6, y: 2)
+        .buttonStyle(.plain)
     }
 
     private func transactionList(viewModel: HomeViewModel) -> some View {

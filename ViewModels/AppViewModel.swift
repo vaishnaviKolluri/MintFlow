@@ -10,6 +10,8 @@ enum AppScreen {
     case login
     case signup
     case home
+    case analytics
+    case notifications
 }
 
 @MainActor
